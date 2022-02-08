@@ -16,7 +16,6 @@ class HomeScreen extends StatelessWidget {
   var schoolNameController = TextEditingController();
   var phoneController = TextEditingController();
   var schoollAddressController = TextEditingController();
-  var schoollAdddressController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
   @override
