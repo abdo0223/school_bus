@@ -3,10 +3,8 @@ import 'dart:io';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:school_bus/helper/componanets.dart';
-import 'package:school_bus/register.dart/cubit.dart';
 import 'package:school_bus/register.dart/state.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
@@ -28,8 +26,9 @@ class HomeScreen extends StatelessWidget {
           if (state is SchoolCreateSuccessState) {}
         },
         builder: (context, state) {
-          var userModel = SchoolLoginCubit.get(context).model;
           var profileImage = SchoolLoginCubit.get(context).profileImage;
+          var userModel = SchoolLoginCubit.get(context).model;
+
           Size size = MediaQuery.of(context).size;
           return Scaffold(
             body: SingleChildScrollView(
@@ -251,7 +250,21 @@ class HomeScreen extends StatelessWidget {
                                             builder: (context) => defaultButton(
                                               function: () {
                                                 SchoolLoginCubit.get(context)
-                                                    .uploadProfileImage();
+                                                    .updateUser(
+                                                        childName:
+                                                            childNameController
+                                                                .text,
+                                                        chlildAddress:
+                                                            addressController
+                                                                .text,
+                                                        schoolName:
+                                                            schoolNameController
+                                                                .text,
+                                                        schoollocation:
+                                                            schoollAddressController
+                                                                .text,
+                                                        phone: phoneController
+                                                            .text);
                                               },
                                               text: 'Save ',
                                               isUpperCase: true,

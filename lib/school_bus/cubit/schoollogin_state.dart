@@ -29,3 +29,9 @@ class SchoolGetUsererrorState extends SchoolLoginState {
   final String error;
   SchoolGetUsererrorState(this.error);
 }
+
+class SchoolUploadProfileImagePickedSuccessState extends SchoolLoginState {}
+
+class SchoolUploadProfileImagePickedErrorState extends SchoolLoginState {}
+
+class SchoolUserUpdateErrorState extends SchoolLoginState {}

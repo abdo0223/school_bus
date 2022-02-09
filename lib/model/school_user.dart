@@ -4,6 +4,10 @@ class SchoolUserModel {
   String phone;
   String uid;
   String image;
+  String childName;
+  String chlildAddress;
+  String schoolName;
+  String schoollocation;
 
   SchoolUserModel({
     this.email,
@@ -11,6 +15,10 @@ class SchoolUserModel {
     this.phone,
     this.uid,
     this.image,
+    this.childName,
+    this.chlildAddress,
+    this.schoolName,
+    this.schoollocation,
   });
   SchoolUserModel.fromjson(Map<String, dynamic> json) {
     email = json['email'];
@@ -18,6 +26,10 @@ class SchoolUserModel {
     phone = json['phone'];
     uid = json['uid'];
     image = json['image'];
+    childName = json['childName'];
+    chlildAddress = json['chlildAddress'];
+    schoolName = json['schoolName'];
+    schoollocation = json['schoollocation'];
   }
   Map<String, dynamic> toMap() {
     return {
@@ -25,6 +37,11 @@ class SchoolUserModel {
       "email": email,
       "phone": phone,
       "uid": uid,
+      "image": image,
+      "childName": childName,
+      "chlildAddress": chlildAddress,
+      "schoolName": schoolName,
+      "schoollocation": schoollocation,
     };
   }
 }

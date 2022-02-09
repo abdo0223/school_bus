@@ -77,6 +77,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     }
   }
 
+  String profileImageUrl = '';
   void uploadProfileImage() {
     firebase_storage.FirebaseStorage.instance
         .ref()
@@ -84,8 +85,41 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
         .putFile(profileImage)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
+        emit(SchoolUploadProfileImagePickedSuccessState());
         print(value);
+        profileImageUrl = value;
+      }).catchError((error) {
+        SchoolUploadProfileImagePickedErrorState();
+      }).catchError((error) {
+        emit(SchoolUploadProfileImagePickedErrorState());
       });
-    }).catchError((error) {});
+    });
+  }
+
+  void updateUser({
+    String image,
+    String childName,
+    String chlildAddress,
+    String schoolName,
+    String schoollocation,
+    String phone,
+  }) {
+    SchoolUserModel userModel = SchoolUserModel(
+      childName: childName,
+      chlildAddress: chlildAddress,
+      image: image,
+      schoolName: schoolName,
+      schoollocation: schoollocation,
+      phone: phone,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel.uid)
+        .update(userModel.toMap())
+        .then((value) {
+      getUserData();
+    }).catchError((error) {
+      SchoolUserUpdateErrorState();
+    });
   }
 }
