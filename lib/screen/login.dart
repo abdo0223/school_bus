@@ -181,8 +181,12 @@ class SchoolLoginScreen extends StatelessWidget {
                                         function: () {
                                           if (state
                                               is SchoolLoginSuccessState) {
-                                            navigateAndFinish(
-                                                context, HomeScreen());
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            HomeScreen()));
                                           }
                                           if (formKey.currentState.validate()) {
                                             SchoolLoginCubit.get(context)

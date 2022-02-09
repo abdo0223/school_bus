@@ -8,6 +8,7 @@ import 'package:school_bus/register.dart/state.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
 import 'package:school_bus/screen/cubit/profile_screen.dart';
+import 'package:school_bus/screen/login.dart';
 
 class SchoolRegisterScreen extends StatelessWidget {
   var nameController = TextEditingController();
@@ -192,8 +193,8 @@ class SchoolRegisterScreen extends StatelessWidget {
                                               SchoolRegisterCubit.get(context)
                                                   .userRegister(
                                                 email: emailController.text,
-                                                name: passwordController.text,
-                                                phone: passwordController.text,
+                                                name: nameController.text,
+                                                phone: phoneController.text,
                                                 password:
                                                     passwordController.text,
                                               );
@@ -205,10 +206,38 @@ class SchoolRegisterScreen extends StatelessWidget {
                                         fallback: (context) => Center(
                                             child: CircularProgressIndicator()),
                                       ),
-                                      Text(
-                                        'OR',
-                                        style: TextStyle(fontSize: 18),
-                                      )
+                                      SizedBox(
+                                        height: 24,
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "If you ahve an acount  ",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          SchoolLoginScreen()));
+                                            },
+                                            child: Text(
+                                              "Log In.",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),

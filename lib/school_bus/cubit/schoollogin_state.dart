@@ -16,3 +16,16 @@ class SchoolLoginERRORState extends SchoolLoginState {
 }
 
 class SchoolChangePasswordVisibiltyState extends SchoolLoginState {}
+
+class SchoolProfileImagePickedSuccessState extends SchoolLoginState {}
+
+class SchoolProfileImagePickedErrorState extends SchoolLoginState {}
+
+class SchoolGetUserSuccessState extends SchoolLoginState {}
+
+class SchoolGetUserLoadingState extends SchoolLoginState {}
+
+class SchoolGetUsererrorState extends SchoolLoginState {
+  final String error;
+  SchoolGetUsererrorState(this.error);
+}

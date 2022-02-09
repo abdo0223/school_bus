@@ -1,14 +1,15 @@
+import 'dart:io';
+
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:school_bus/helper/componanets.dart';
-import 'package:school_bus/model/school_user.dart';
 import 'package:school_bus/register.dart/cubit.dart';
 import 'package:school_bus/register.dart/state.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
-import 'package:school_bus/screen/cubit/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   var childNameController = TextEditingController();
@@ -16,8 +17,8 @@ class HomeScreen extends StatelessWidget {
   var schoolNameController = TextEditingController();
   var phoneController = TextEditingController();
   var schoollAddressController = TextEditingController();
-
   var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -27,6 +28,8 @@ class HomeScreen extends StatelessWidget {
           if (state is SchoolCreateSuccessState) {}
         },
         builder: (context, state) {
+          var userModel = SchoolLoginCubit.get(context).model;
+          var profileImage = SchoolLoginCubit.get(context).profileImage;
           Size size = MediaQuery.of(context).size;
           return Scaffold(
             body: SingleChildScrollView(
@@ -69,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              'parent name',
+                                              ('name of parent'),
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15,
@@ -127,7 +130,11 @@ class HomeScreen extends StatelessWidget {
                                                   Color(0XFFFFAB4C),
                                               child: CircleAvatar(
                                                 radius: 45.0,
-                                                backgroundImage: AssetImage(''),
+                                                backgroundImage: profileImage ==
+                                                        null
+                                                    ? AssetImage(
+                                                        'assets/image/idealogo3.png')
+                                                    : FileImage(profileImage),
                                               ),
                                             ),
                                             CircleAvatar(
@@ -138,7 +145,11 @@ class HomeScreen extends StatelessWidget {
                                                     size: 25,
                                                     color: Color(0XFFFFAB4C),
                                                   ),
-                                                  onPressed: () {}),
+                                                  onPressed: () {
+                                                    SchoolLoginCubit.get(
+                                                            context)
+                                                        .getProfileImage();
+                                                  }),
                                             )
                                           ],
                                         ),
@@ -239,17 +250,8 @@ class HomeScreen extends StatelessWidget {
                                                 is! SchoolRegisterLoadingState,
                                             builder: (context) => defaultButton(
                                               function: () {
-                                                if (formKey.currentState
-                                                    .validate()) {
-                                                  if (state
-                                                      is SchoolCreateSuccessState) {
-                                                    navigateAndFinish(
-                                                        context, HomeScreen());
-                                                  }
-                                                  SchoolRegisterCubit.get(
-                                                          context)
-                                                      .userRegister();
-                                                }
+                                                SchoolLoginCubit.get(context)
+                                                    .uploadProfileImage();
                                               },
                                               text: 'Save ',
                                               isUpperCase: true,

@@ -1,13 +1,35 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:school_bus/helper/constants.dart';
+import 'package:school_bus/model/school_user.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
+import 'package:school_bus/shared/cash_helper.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class SchoolLoginCubit extends Cubit<SchoolLoginState> {
   SchoolLoginCubit() : super(SchoolLoginIntialState());
 
   static SchoolLoginCubit get(context) => BlocProvider.of(context);
+  SchoolUserModel model;
+
+  void getUserData() {
+    emit(SchoolGetUserLoadingState());
+    uId = CacheHelper.getData(key: 'uId');
+    FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
+      print(value.data());
+      model = SchoolUserModel.fromjson(value.data());
+      emit(SchoolGetUserSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(SchoolGetUsererrorState(error.toString()));
+    });
+  }
 
   void userLogin({
     @required String email,
@@ -36,5 +58,34 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     suffix =
         isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(SchoolChangePasswordVisibiltyState());
+  }
+
+  File profileImage;
+  var picker = ImagePicker();
+
+  Future<void> getProfileImage() async {
+    //  final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+
+      emit(SchoolProfileImagePickedSuccessState());
+    } else {
+      print("no image selected");
+      emit(SchoolProfileImagePickedErrorState());
+    }
+  }
+
+  void uploadProfileImage() {
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('user/${Uri.file(profileImage.path).pathSegments.last}')
+        .putFile(profileImage)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        print(value);
+      });
+    }).catchError((error) {});
   }
 }
