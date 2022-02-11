@@ -174,33 +174,34 @@ class SchoolLoginScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 30.0,
                                     ),
-                                    ConditionalBuilder(
-                                      condition:
-                                          state is! SchoolLoginLoadingState,
-                                      builder: (context) => defaultButton(
-                                        function: () {
-                                          if (state
-                                              is SchoolLoginSuccessState) {
-                                            Navigator.of(context)
-                                                .pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            HomeScreen()));
-                                          }
-                                          if (formKey.currentState.validate()) {
-                                            SchoolLoginCubit.get(context)
-                                                .userLogin(
-                                              email: emailController.text,
-                                              password: passwordController.text,
-                                            );
-                                          }
-                                        },
-                                        text: 'login',
-                                        isUpperCase: true,
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 28),
+                                      child: ConditionalBuilder(
+                                        condition:
+                                            state is! SchoolLoginLoadingState,
+                                        builder: (context) => defaultButton(
+                                          function: () {
+                                            if (state
+                                                is SchoolLoginSuccessState) {
+                                              navigateAndFinish(
+                                                  context, HomeScreen());
+                                            }
+                                            if (formKey.currentState
+                                                .validate()) {
+                                              SchoolLoginCubit.get(context)
+                                                  .userLogin(
+                                                email: emailController.text,
+                                                password:
+                                                    passwordController.text,
+                                              );
+                                            }
+                                          },
+                                          text: 'login',
+                                          isUpperCase: true,
+                                        ),
+                                        fallback: (context) => Center(
+                                            child: CircularProgressIndicator()),
                                       ),
-                                      fallback: (context) => Center(
-                                          child: CircularProgressIndicator()),
                                     ),
                                     SizedBox(
                                       height: 15.0,

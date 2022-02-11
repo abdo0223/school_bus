@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:school_bus/helper/constants.dart';
 import 'package:school_bus/model/school_user.dart';
+import 'package:school_bus/register.dart/state.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
 import 'package:school_bus/shared/cash_helper.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -87,6 +89,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
       value.ref.getDownloadURL().then((value) {
         emit(SchoolUploadProfileImagePickedSuccessState());
         print(value);
+
         profileImageUrl = value;
       }).catchError((error) {
         SchoolUploadProfileImagePickedErrorState();
@@ -96,7 +99,70 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     });
   }
 
-  void updateUser({
+/////////////////////////////////////////////
+  void profileUbdate({
+    @required String password,
+    @required String childName,
+    @required String chlildAddress,
+    @required String schoolName,
+    @required String schoollocation,
+    @required String phone,
+    String name,
+  }) {
+    emit(SchoolLoginLoadingState());
+
+    String email = FirebaseAuth.instance.currentUser.email;
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    print(schoolName);
+    print(schoollocation);
+    print(email);
+    print(phone);
+
+    profileCreate(
+        uid: uid,
+        name: name,
+        email: email,
+        childName: childName,
+        chlildAddress: chlildAddress,
+        phone: phone,
+        schoolName: schoolName,
+        schoollocation: schoollocation);
+  }
+
+  void profileCreate({
+    @required String childName,
+    @required String chlildAddress,
+    @required String schoolName,
+    @required String schoollocation,
+    @required String phone,
+    @required String email,
+    @required String uid,
+    @required String name,
+  }) {
+    SchoolUserModel profilemodel = SchoolUserModel(
+        childName: childName,
+        chlildAddress: chlildAddress,
+        schoolName: schoolName,
+        schoollocation: schoollocation,
+        phone: phone,
+        email: email,
+        name: name,
+        isUpdated: true,
+        uid: uid);
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(profilemodel.uid)
+        .update(profilemodel.toMap())
+        .then((value) {
+      getUserData();
+      emit(SchoolUserUpdateSuccessState());
+    }).catchError((error) {
+      SchoolUserUpdateErrorState();
+    });
+  }
+}
+/*   void updateUser({
     String image,
     String childName,
     String chlildAddress,
@@ -104,10 +170,10 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     String schoollocation,
     String phone,
   }) {
-    SchoolUserModel userModel = SchoolUserModel(
+    emit(SchoolUserUpdateLoadinState());
+    SchoolProfileModel userModel = SchoolProfileModel(
       childName: childName,
       chlildAddress: chlildAddress,
-      image: image,
       schoolName: schoolName,
       schoollocation: schoollocation,
       phone: phone,
@@ -118,8 +184,37 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
         .update(userModel.toMap())
         .then((value) {
       getUserData();
+      emit(SchoolUserUpdateSuccessState());
     }).catchError((error) {
-      SchoolUserUpdateErrorState();
+      emit(SchoolUserUpdateSuccessState());
     });
   }
-}
+
+  void userProfile({
+    @required String childName,
+    @required String chlildAddress,
+    @required String schoolName,
+    @required String schoollocation,
+    @required String phone,
+    @required String image,
+    @required String password,
+    @required String email,
+  }) {
+    print('dma');
+    emit(SchoolLoginLoadingState());
+
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    )
+        .then((value) {
+      print(value.user.email);
+      print(value.user.uid);
+
+      updateUser();
+    }).catchError((error) {
+      SchoolLoginERRORState(error.toString());
+    });
+  }
+ */

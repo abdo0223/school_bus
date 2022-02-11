@@ -19,6 +19,7 @@ class SchoolRegisterCubit extends Cubit<SchoolRegisterState> {
     @required String phone,
   }) {
     print('dma');
+    print(email);
     emit(SchoolRegisterLoadingState());
 
     FirebaseAuth.instance
@@ -42,17 +43,12 @@ class SchoolRegisterCubit extends Cubit<SchoolRegisterState> {
     @required String phone,
     @required String uid,
   }) {
-    SchoolUserModel model = SchoolUserModel(
-        uid: uid,
-        name: name,
-        email: email,
-        phone: phone,
-        image:
-            'https://imgupscaler.com/static/images/compare/animal-original.jpg');
+    SchoolUserModel registermodel = SchoolUserModel(
+        uid: uid, name: name, email: email, phone: phone, isUpdated: false);
     FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
-        .set(model.toMap())
+        .doc(registermodel.uid)
+        .set(registermodel.toMap())
         .then((value) {
       emit(SchoolCreateSuccessState());
     }).catchError((error) {

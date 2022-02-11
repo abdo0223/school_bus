@@ -21,3 +21,13 @@ class SchoolCreateERRORState extends SchoolRegisterState {
 }
 
 class SchoolRegisterChangePasswordVisibiltyState extends SchoolRegisterState {}
+
+//////////////////////////////////
+class SchoolGetUseerLoadingState extends SchoolRegisterState {}
+
+class SchoolGetUseerSuccessState extends SchoolRegisterState {}
+
+class SchoolGetUseererrorState extends SchoolRegisterState {
+  final String error;
+  SchoolGetUseererrorState(this.error);
+}

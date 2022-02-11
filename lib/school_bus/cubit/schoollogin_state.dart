@@ -35,3 +35,7 @@ class SchoolUploadProfileImagePickedSuccessState extends SchoolLoginState {}
 class SchoolUploadProfileImagePickedErrorState extends SchoolLoginState {}
 
 class SchoolUserUpdateErrorState extends SchoolLoginState {}
+
+class SchoolUserUpdateLoadinState extends SchoolLoginState {}
+
+class SchoolUserUpdateSuccessState extends SchoolLoginState {}
