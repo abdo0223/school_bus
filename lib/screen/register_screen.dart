@@ -14,7 +14,7 @@ class SchoolRegisterScreen extends StatelessWidget {
   var nameController = TextEditingController();
 
   var emailController = TextEditingController();
-  var phoneController = TextEditingController();
+  var confirmPassword = TextEditingController();
 
   var passwordController = TextEditingController();
 
@@ -81,13 +81,24 @@ class SchoolRegisterScreen extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      Container(
-                                        width: size.height * .20,
-                                        height: size.height * .20,
-                                        child: Image.asset(
-                                          "assets/image/idealogo3.png",
-                                          fit: BoxFit.fill,
-                                        ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            width: size.height * .20,
+                                            height: size.height * .28,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: new AssetImage(
+                                                      "assets/image/idealogo3.png"),
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -98,7 +109,7 @@ class SchoolRegisterScreen extends StatelessWidget {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: size.height * .37),
+                        padding: EdgeInsets.only(top: size.height * .36),
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Stack(
@@ -128,7 +139,7 @@ class SchoolRegisterScreen extends StatelessWidget {
                                           }
                                         },
                                         label: 'username',
-                                        prefix: Icons.email_outlined,
+                                        prefix: Icons.person,
                                       ),
                                       SizedBox(
                                         height: 7.0,
@@ -142,21 +153,7 @@ class SchoolRegisterScreen extends StatelessWidget {
                                           }
                                         },
                                         label: 'Email Address',
-                                        prefix: Icons.person,
-                                      ),
-                                      SizedBox(
-                                        height: 7.0,
-                                      ),
-                                      defaultFormField(
-                                        controller: phoneController,
-                                        type: TextInputType.phone,
-                                        validate: (String value) {
-                                          if (value.isEmpty) {
-                                            return 'please enter your phone address';
-                                          }
-                                        },
-                                        label: 'Phone',
-                                        prefix: Icons.phone,
+                                        prefix: Icons.email_outlined,
                                       ),
                                       SizedBox(
                                         height: 7.0,
@@ -171,6 +168,23 @@ class SchoolRegisterScreen extends StatelessWidget {
                                         },
                                         label: 'Password',
                                         prefix: Icons.lock,
+                                      ),
+                                      SizedBox(
+                                        height: 7.0,
+                                      ),
+                                      defaultFormField(
+                                        controller: confirmPassword,
+                                        type: TextInputType.phone,
+                                        validate: (String value) {
+                                          if (value.isEmpty) {
+                                            return 'please enter your password again';
+                                          }
+                                          if (value != passwordController.text)
+                                            return 'Not Match';
+                                          return null;
+                                        },
+                                        label: 'confirmPassword',
+                                        prefix: Icons.phone,
                                       ),
                                       SizedBox(
                                         height: 7.0,
@@ -194,7 +208,6 @@ class SchoolRegisterScreen extends StatelessWidget {
                                                   .userRegister(
                                                 email: emailController.text,
                                                 name: nameController.text,
-                                                phone: phoneController.text,
                                                 password:
                                                     passwordController.text,
                                               );
@@ -216,10 +229,10 @@ class SchoolRegisterScreen extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "If you ahve an acount  ",
+                                            "If you have an acount  ",
                                             style: TextStyle(
-                                                fontSize: 16,
-                                                fontStyle: FontStyle.italic),
+                                              fontSize: 16,
+                                            ),
                                           ),
                                           InkWell(
                                             onTap: () {
@@ -230,10 +243,11 @@ class SchoolRegisterScreen extends StatelessWidget {
                                                           SchoolLoginScreen()));
                                             },
                                             child: Text(
-                                              "Log In.",
+                                              "LOGIN.",
                                               style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
+                                                fontSize: 16,
+                                                color: Colors.blue,
+                                              ),
                                             ),
                                           )
                                         ],

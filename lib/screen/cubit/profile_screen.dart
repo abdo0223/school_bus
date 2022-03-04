@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              '${childNameController.text}',
+                                              '${nameController.text}',
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15,
@@ -271,32 +271,33 @@ class HomeScreen extends StatelessWidget {
                                                             .validate()) {
                                                           if (state
                                                               is! SchoolCreateSuccessState)
+                                                            /* SchoolLoginCubit
+                                                                    .get(
+                                                                        context)
+                                                                .uploadProfileImage(); */
                                                             SchoolLoginCubit
                                                                     .get(
                                                                         context)
-                                                                .uploadProfileImage();
-                                                          SchoolLoginCubit.get(
-                                                                  context)
-                                                              .uploadProfileImage();
-                                                          SchoolLoginCubit.get(
-                                                                  context)
-                                                              .profileUbdate(
-                                                            childName:
-                                                                childNameController
-                                                                    .text,
-                                                            chlildAddress:
-                                                                addressController
-                                                                    .text,
-                                                            schoolName:
-                                                                schoolNameController
-                                                                    .text,
-                                                            schoollocation:
-                                                                schoollAddressController
-                                                                    .text,
-                                                            phone:
-                                                                phoneController
-                                                                    .text,
-                                                          );
+                                                                .profileUbdate(
+                                                              name:
+                                                                  nameController
+                                                                      .text,
+                                                              childName:
+                                                                  childNameController
+                                                                      .text,
+                                                              chlildAddress:
+                                                                  addressController
+                                                                      .text,
+                                                              schoolName:
+                                                                  schoolNameController
+                                                                      .text,
+                                                              schoollocation:
+                                                                  schoollAddressController
+                                                                      .text,
+                                                              phone:
+                                                                  phoneController
+                                                                      .text,
+                                                            );
                                                         }
                                                       },
                                                       text: 'save',

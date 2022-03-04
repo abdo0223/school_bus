@@ -107,7 +107,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     @required String schoolName,
     @required String schoollocation,
     @required String phone,
-    String name,
+    @required String name,
   }) {
     emit(SchoolLoginLoadingState());
 
@@ -117,6 +117,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     print(schoollocation);
     print(email);
     print(phone);
+    print(name);
 
     profileCreate(
         uid: uid,
@@ -138,6 +139,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     @required String email,
     @required String uid,
     @required String name,
+    @required String image,
   }) {
     SchoolUserModel profilemodel = SchoolUserModel(
         childName: childName,
