@@ -12,6 +12,7 @@ import 'package:school_bus/school_bus/cubit/schoollogin_cubit.dart';
 import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
 
 class HomeScreen extends StatelessWidget {
+  HomeScreen({Key key}) : super(key: key);
   var childNameController = TextEditingController();
   var addressController = TextEditingController();
   var schoolNameController = TextEditingController();
@@ -86,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       Container(
                                         width: size.height * .20,
-                                        height: size.height * .20,
+                                        height: size.height * .17,
                                         child: Image.asset(
                                           "assets/image/idealogo3.png",
                                           fit: BoxFit.fill,
@@ -101,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: size.height * .35),
+                        padding: EdgeInsets.only(top: size.height * .33),
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Stack(
@@ -114,208 +115,200 @@ class HomeScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(30),
                                       topRight: Radius.circular(30),
+                                      bottomLeft: Radius.circular(30),
+                                      bottomRight: Radius.circular(30),
                                     )),
                               ),
-                              SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10, right: 20, left: 20),
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Stack(
-                                              alignment: Alignment.bottomRight,
-                                              children: [
-                                                CircleAvatar(
-                                                  radius: 50,
-                                                  backgroundColor:
-                                                      Color(0XFFFFAB4C),
-                                                  child: CircleAvatar(
-                                                    radius: 45.0,
-                                                    backgroundImage:
-                                                        profileImage == null
-                                                            ? AssetImage(
-                                                                'assets/image/idealogo3.png')
-                                                            : FileImage(
-                                                                profileImage),
-                                                  ),
-                                                ),
-                                                CircleAvatar(
-                                                  backgroundColor: Colors.white,
-                                                  child: IconButton(
-                                                      icon: Icon(
-                                                        Icons.linked_camera,
-                                                        size: 25,
-                                                        color:
-                                                            Color(0XFFFFAB4C),
-                                                      ),
-                                                      onPressed: () {
-                                                        SchoolLoginCubit.get(
-                                                                context)
-                                                            .getProfileImage();
-                                                      }),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 15,
-                                          ),
-                                          Column(
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, right: 20, left: 20),
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Stack(
+                                            alignment: Alignment.bottomRight,
                                             children: [
-                                              Container(
-                                                height: 55,
-                                                child: defaultFormField(
-                                                  controller:
-                                                      childNameController,
+                                              CircleAvatar(
+                                                radius: 50,
+                                                backgroundColor:
+                                                    Color(0XFFFFAB4C),
+                                                child: CircleAvatar(
+                                                  radius: 45.0,
+                                                  backgroundImage: profileImage ==
+                                                          null
+                                                      ? AssetImage(
+                                                          'assets/image/idealogo3.png')
+                                                      : FileImage(profileImage),
+                                                ),
+                                              ),
+                                              CircleAvatar(
+                                                backgroundColor: Colors.white,
+                                                child: IconButton(
+                                                    icon: Icon(
+                                                      Icons.linked_camera,
+                                                      size: 25,
+                                                      color: Color(0XFFFFAB4C),
+                                                    ),
+                                                    onPressed: () {
+                                                      SchoolLoginCubit.get(
+                                                              context)
+                                                          .getProfileImage();
+                                                    }),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              height: 55,
+                                              child: defaultFormField(
+                                                controller: childNameController,
+                                                type: TextInputType.name,
+                                                validate: (String value) {
+                                                  if (value.isEmpty) {
+                                                    return 'please enter your name address';
+                                                  }
+                                                },
+                                                label: 'child name',
+                                                prefix: Icons.person,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 12.0,
+                                            ),
+                                            Container(
+                                              height: 55,
+                                              child: defaultFormField(
+                                                  controller: addressController,
                                                   type: TextInputType.name,
                                                   validate: (String value) {
                                                     if (value.isEmpty) {
-                                                      return 'please enter your name address';
+                                                      return 'please enter your address';
                                                     }
                                                   },
-                                                  label: 'child name',
-                                                  prefix: Icons.person,
-                                                ),
+                                                  label: 'address',
+                                                  prefix: Icons.location_pin),
+                                            ),
+                                            SizedBox(
+                                              height: 12.0,
+                                            ),
+                                            Container(
+                                              height: 55,
+                                              child: defaultFormField(
+                                                controller: phoneController,
+                                                type: TextInputType.phone,
+                                                validate: (String value) {
+                                                  if (value.isEmpty) {
+                                                    return 'please enter your phone address';
+                                                  }
+                                                },
+                                                label: 'Phone',
+                                                prefix: Icons.phone,
                                               ),
-                                              SizedBox(
-                                                height: 12.0,
+                                            ),
+                                            SizedBox(
+                                              height: 12.0,
+                                            ),
+                                            Container(
+                                              height: 55,
+                                              child: defaultFormField(
+                                                controller:
+                                                    schoolNameController,
+                                                type: TextInputType
+                                                    .visiblePassword,
+                                                validate: (String value) {
+                                                  if (value.isEmpty) {
+                                                    return 'please enter your school name';
+                                                  }
+                                                },
+                                                label: 'school name',
+                                                prefix: Icons.school_sharp,
                                               ),
-                                              Container(
-                                                height: 55,
-                                                child: defaultFormField(
-                                                    controller:
-                                                        addressController,
-                                                    type: TextInputType.name,
-                                                    validate: (String value) {
-                                                      if (value.isEmpty) {
-                                                        return 'please enter your address';
+                                            ),
+                                            SizedBox(
+                                              height: 12.0,
+                                            ),
+                                            Container(
+                                              height: 55,
+                                              child: defaultFormField(
+                                                controller:
+                                                    schoollAddressController,
+                                                type: TextInputType
+                                                    .visiblePassword,
+                                                validate: (String value) {
+                                                  if (value.isEmpty) {
+                                                    return 'please enter your school address';
+                                                  }
+                                                },
+                                                label: 'school address',
+                                                prefix: Icons.location_pin,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 15.0,
+                                            ),
+                                            Container(
+                                              width: 150,
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: ConditionalBuilder(
+                                                  condition: state
+                                                      is! SchoolLoginLoadingState,
+                                                  builder: (context) =>
+                                                      defaultButton(
+                                                    function: () {
+                                                      if (formKey.currentState
+                                                          .validate()) {
+                                                        if (state
+                                                            is! SchoolCreateSuccessState)
+                                                          /* SchoolLoginCubit
+                                                                  .get(
+                                                                      context)
+                                                              .uploadProfileImage(); */
+                                                          SchoolLoginCubit.get(
+                                                                  context)
+                                                              .profileUbdate(
+                                                            childName:
+                                                                childNameController
+                                                                    .text,
+                                                            chlildAddress:
+                                                                addressController
+                                                                    .text,
+                                                            schoolName:
+                                                                schoolNameController
+                                                                    .text,
+                                                            schoollocation:
+                                                                schoollAddressController
+                                                                    .text,
+                                                            phone:
+                                                                phoneController
+                                                                    .text,
+                                                          );
                                                       }
                                                     },
-                                                    label: 'address',
-                                                    prefix: Icons.location_pin),
-                                              ),
-                                              SizedBox(
-                                                height: 12.0,
-                                              ),
-                                              Container(
-                                                height: 55,
-                                                child: defaultFormField(
-                                                  controller: phoneController,
-                                                  type: TextInputType.phone,
-                                                  validate: (String value) {
-                                                    if (value.isEmpty) {
-                                                      return 'please enter your phone address';
-                                                    }
-                                                  },
-                                                  label: 'Phone',
-                                                  prefix: Icons.phone,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 12.0,
-                                              ),
-                                              Container(
-                                                height: 55,
-                                                child: defaultFormField(
-                                                  controller:
-                                                      schoolNameController,
-                                                  type: TextInputType
-                                                      .visiblePassword,
-                                                  validate: (String value) {
-                                                    if (value.isEmpty) {
-                                                      return 'please enter your school name';
-                                                    }
-                                                  },
-                                                  label: 'school name',
-                                                  prefix: Icons.school_sharp,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 12.0,
-                                              ),
-                                              Container(
-                                                height: 55,
-                                                child: defaultFormField(
-                                                  controller:
-                                                      schoollAddressController,
-                                                  type: TextInputType
-                                                      .visiblePassword,
-                                                  validate: (String value) {
-                                                    if (value.isEmpty) {
-                                                      return 'please enter your school address';
-                                                    }
-                                                  },
-                                                  label: 'school address',
-                                                  prefix: Icons.location_pin,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 15.0,
-                                              ),
-                                              Container(
-                                                width: 150,
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment.bottomRight,
-                                                  child: ConditionalBuilder(
-                                                    condition: state
-                                                        is! SchoolLoginLoadingState,
-                                                    builder: (context) =>
-                                                        defaultButton(
-                                                      function: () {
-                                                        if (formKey.currentState
-                                                            .validate()) {
-                                                          if (state
-                                                              is! SchoolCreateSuccessState)
-                                                            /* SchoolLoginCubit
-                                                                    .get(
-                                                                        context)
-                                                                .uploadProfileImage(); */
-                                                            SchoolLoginCubit
-                                                                    .get(
-                                                                        context)
-                                                                .profileUbdate(
-                                                              name:
-                                                                  nameController
-                                                                      .text,
-                                                              childName:
-                                                                  childNameController
-                                                                      .text,
-                                                              chlildAddress:
-                                                                  addressController
-                                                                      .text,
-                                                              schoolName:
-                                                                  schoolNameController
-                                                                      .text,
-                                                              schoollocation:
-                                                                  schoollAddressController
-                                                                      .text,
-                                                              phone:
-                                                                  phoneController
-                                                                      .text,
-                                                            );
-                                                        }
-                                                      },
-                                                      text: 'save',
-                                                      isUpperCase: true,
-                                                    ),
-                                                    fallback: (context) => Center(
-                                                        child:
-                                                            CircularProgressIndicator()),
+                                                    text: 'save',
+                                                    isUpperCase: true,
                                                   ),
+                                                  fallback: (context) => Center(
+                                                      child:
+                                                          CircularProgressIndicator()),
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

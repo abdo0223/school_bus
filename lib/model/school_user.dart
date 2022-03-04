@@ -7,7 +7,7 @@ class SchoolUserModel {
   String email;
   String phone;
   String uid;
-  File image;
+  String profileImage;
   String childName;
   String chlildAddress;
   String schoolName;
@@ -19,7 +19,7 @@ class SchoolUserModel {
     this.name,
     this.phone,
     this.uid,
-    this.image,
+    this.profileImage,
     this.childName,
     this.chlildAddress,
     this.schoolName,
@@ -33,7 +33,7 @@ class SchoolUserModel {
     phone = json['phone'];
     uid = json['uid'];
 
-    image = json['image'];
+    profileImage = json['profileImage'];
     childName = json['childName'];
     chlildAddress = json['chlildAddress'];
     schoolName = json['schoolName'];
@@ -45,7 +45,7 @@ class SchoolUserModel {
       "email": email,
       "phone": phone,
       "uid": uid,
-      "image": image,
+      "profileImage": profileImage,
       "childName": childName,
       "chlildAddress": chlildAddress,
       "schoolName": schoolName,

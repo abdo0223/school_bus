@@ -1,6 +1,7 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 import 'package:school_bus/helper/componanets.dart';
 import 'package:school_bus/register.dart/cubit.dart';
@@ -122,6 +123,8 @@ class SchoolRegisterScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(30),
                                       topRight: Radius.circular(30),
+                                      bottomLeft: Radius.circular(30),
+                                      bottomRight: Radius.circular(30),
                                     )),
                               ),
                               Padding(
@@ -228,11 +231,15 @@ class SchoolRegisterScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            "If you have an acount  ",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            ),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                "If you have an acount  ",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                           InkWell(
                                             onTap: () {
@@ -242,15 +249,34 @@ class SchoolRegisterScreen extends StatelessWidget {
                                                               context) =>
                                                           SchoolLoginScreen()));
                                             },
-                                            child: Text(
-                                              "LOGIN.",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.blue,
-                                              ),
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  "LOGIN.",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color(0XFFFFAB4C),
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
                                             ),
                                           )
                                         ],
+                                      ),
+                                      Text(
+                                        "OR",
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      SignInButton(
+                                        Buttons.Google,
+                                        onPressed: () {
+                                          _showButtonPressDialog(
+                                              context, 'Google');
+                                        },
                                       ),
                                     ],
                                   ),
@@ -269,5 +295,13 @@ class SchoolRegisterScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _showButtonPressDialog(BuildContext context, String provider) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text('$provider Button Pressed!'),
+      backgroundColor: Colors.black26,
+      duration: Duration(milliseconds: 400),
+    ));
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -101,13 +100,13 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
 
 /////////////////////////////////////////////
   void profileUbdate({
-    @required String password,
     @required String childName,
     @required String chlildAddress,
     @required String schoolName,
     @required String schoollocation,
     @required String phone,
     @required String name,
+    String profileImage,
   }) {
     emit(SchoolLoginLoadingState());
 
@@ -117,7 +116,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     print(schoollocation);
     print(email);
     print(phone);
-    print(name);
+    print(childName);
 
     profileCreate(
         uid: uid,
@@ -127,6 +126,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
         chlildAddress: chlildAddress,
         phone: phone,
         schoolName: schoolName,
+        profileImage: profileImageUrl,
         schoollocation: schoollocation);
   }
 
@@ -137,9 +137,9 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
     @required String schoollocation,
     @required String phone,
     @required String email,
-    @required String uid,
     @required String name,
-    @required String image,
+    @required String uid,
+    @required String profileImage,
   }) {
     SchoolUserModel profilemodel = SchoolUserModel(
         childName: childName,
@@ -149,6 +149,7 @@ class SchoolLoginCubit extends Cubit<SchoolLoginState> {
         phone: phone,
         email: email,
         name: name,
+        profileImage: profileImage ?? model.profileImage,
         isUpdated: true,
         uid: uid);
 

@@ -7,6 +7,7 @@ import 'package:school_bus/school_bus/cubit/schoollogin_state.dart';
 import 'package:school_bus/screen/cubit/profile_screen.dart';
 import 'package:school_bus/screen/register_screen.dart';
 import 'package:school_bus/shared/cash_helper.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class SchoolLoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -115,6 +116,8 @@ class SchoolLoginScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(30),
                                       topRight: Radius.circular(30),
+                                      bottomLeft: Radius.circular(30),
+                                      bottomRight: Radius.circular(30),
                                     )),
                               ),
                               Padding(
@@ -206,22 +209,53 @@ class SchoolLoginScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 15.0,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                    Column(
                                       children: [
-                                        Text(
-                                          'Don\'t have an account?',
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Don\'t have an account?',
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            SchoolRegisterScreen()));
+                                              },
+                                              child: Text(
+                                                "SIGN UP",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color(0XFFFFAB4C),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        defaultTextButton(
-                                          function: () {
-                                            Navigator.of(context)
-                                                .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SchoolRegisterScreen(),
-                                            ));
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "OR",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        SignInButton(
+                                          Buttons.Google,
+                                          onPressed: () {
+                                            _showButtonPressDialog(
+                                                context, 'Google');
                                           },
-                                          text: 'register',
                                         ),
                                       ],
                                     ),
@@ -241,5 +275,13 @@ class SchoolLoginScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _showButtonPressDialog(BuildContext context, String provider) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text('$provider Button Pressed!'),
+      backgroundColor: Colors.black26,
+      duration: Duration(milliseconds: 400),
+    ));
   }
 }
